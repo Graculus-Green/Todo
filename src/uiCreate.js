@@ -12,4 +12,4 @@ const mainView = () => {
     return createUI;
 }
 
-export {mainView as createUI};
+export {mainView as uiCreate};
