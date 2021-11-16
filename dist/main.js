@@ -1,0 +1,1 @@
+(()=>{"use strict";(()=>{const e=document.createElement("div");e.classList.add("mainBox");const t=document.createElement("div");t.classList.add("projectBox");const c=document.querySelector(".content");c.appendChild(t),c.appendChild(e)})()})();

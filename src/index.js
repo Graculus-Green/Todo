@@ -1,9 +1,4 @@
-//title
+import {createUI} from "./uiCreate"
 
-//description
-
-//dueDate
-
-//priority
-
-//notes
+createUI();
+       

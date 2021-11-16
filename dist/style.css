@@ -1,0 +1,26 @@
+body {
+    display: flex;
+    background-color: blueviolet;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    display: flex;
+    padding: 1rem;
+}
+
+.mainBox {
+    background-color: burlywood;
+    width: 200px;
+    height: 200px;
+    margin: 1rem;
+}
+
+.projectBox {
+    background-color: burlywood;
+    width: 150px;
+    height: 200px;
+    margin: 1rem;
+}
