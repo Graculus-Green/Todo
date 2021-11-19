@@ -45,10 +45,44 @@ const renderProjects = () => {
     projectLabel.innerText = "Add a project";
     document.querySelector(".projectForm").appendChild(projectLabel);
 
-
-
 }
 
+const renderTasks = () => {
+  
+    let taskHeader = document.createElement("h2");
+    taskHeader.innerText = "Tasks";
+    taskHeader.classList.add("taskHeader");
+    document.querySelector(".taskBox").appendChild(taskHeader);
+
+    let taskList = document.createElement("ul");
+    taskList.classList.add("taskList");
+    document.querySelector(".taskBox").appendChild(taskList);
+
+    projects.forEach( project => {
+        let taskElement = document.createElement("li");
+        taskElement.classList.add("taskName");
+        taskElement.innerText = project.name;
+        document.querySelector(".taskList").appendChild(taskElement)
+    })
+
+    let taskForm = document.createElement("form");
+    taskForm.classList.add("taskForm");
+    document.querySelector(".taskBox").appendChild(taskForm);
+
+    let taskInput = document.createElement("input");
+    taskInput.classList.add("taskFormInput");
+    taskInput.type = "text";
+    taskInput.name = "taskName";
+    taskInput.id = "taskName1";
+    document.querySelector(".taskForm").appendChild(taskInput);
+
+    let taskLabel = document.createElement("label");
+    taskLabel.classList.add("addTaskLabel");
+    taskLabel.innerText = "Add a task";
+    document.querySelector(".taskForm").appendChild(taskLabel);
+
+}
 uiCreate();
 renderProjects();
+renderTasks();
        

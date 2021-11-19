@@ -30,12 +30,17 @@ body {
     padding: 1rem;
     ;
 }
-.mainBox {
+.taskBox {
     border-radius: 5px;
     width: 300px;
     height: 350px;
     margin: 1rem;
     background-color: rgb(45,164,244);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 12px;
 }
 
 .projectBox {
@@ -51,21 +56,14 @@ body {
     background-color: rgb(45,164,244);
 }
 
-.projectForm {
+.projectForm, .taskForm {
     position: bottom;
     display: flex;
     flex-direction: column;
     color: rgb(207,247,255);
 }
 
-ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-
-
-
-.projectList {
+.projectList, .taskList {
     border-radius: 5px;
     display: flex;
     height: 150px;
@@ -78,15 +76,13 @@ ul {
     scrollbar-color: rgb(45,164,244) rgb(70,187,254);
     color: rgb(15, 59, 88);
 }
-.projectName {
+
+.projectName, .taskName {
     padding-bottom: 6px;
 }
 
-li:active {
-    font-weight: 900;
-}
 
-.projectFormInput{
+.projectFormInput, .taskFormInput{
     border-radius: 5px;
     background-color: rgb(139,210,254);
     border: 1px;
@@ -94,12 +90,21 @@ li:active {
     color: rgb(15, 59, 88);
 }
 
-.addProjectLabel {
+.addProjectLabel, .addTaskLabel {
     padding-top: 6px;
     padding-bottom: 6px;
 
 }
 
-.projectHeader {
+.projectHeader, .taskHeader {
     color: rgb(187,233,255);
 }
+
+li:active {
+    font-weight: 900;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+  }

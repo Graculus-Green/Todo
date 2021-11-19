@@ -8,13 +8,13 @@ const mainView = () => {
     const panelBox = document.createElement("div");
     panelBox.classList.add("panelBox");
 
-    const mainBox = document.createElement("div");
-    mainBox.classList.add("mainBox");
+    const taskBox = document.createElement("div");
+    taskBox.classList.add("taskBox");
 
     const projectBox = document.createElement("div");
     projectBox.classList.add("projectBox");
     panelBox.appendChild(projectBox);
-    panelBox.appendChild(mainBox);
+    panelBox.appendChild(taskBox);
 
     const createUI = document.querySelector(".content");
     createUI.appendChild(mainHeader);
