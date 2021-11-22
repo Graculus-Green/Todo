@@ -106,6 +106,7 @@ body {
 
 li {
     cursor: pointer;
+    width: 100%;
 }
 
 ul {

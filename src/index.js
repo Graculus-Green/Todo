@@ -25,9 +25,6 @@ let isProjectInList = (project) => {
     });
 };*/
 
-const activeProject = () => {
-    
-}
 
 let inputProject = () => {
     let form =document.querySelector('.projectForm');
@@ -49,12 +46,17 @@ let inputProject = () => {
 };
 
 const renderProjects = () => {
+    document.querySelector(".projectList").innerHTML = '';
     projects.forEach( project => {
         let projectElement = document.createElement("li");
         projectElement.classList.add("projectName");
         projectElement.innerText = project.name;
         document.querySelector(".projectList").appendChild(projectElement)
     })
+    // Select the first project by default
+  
+    document.querySelector(".projectName").id = "activeProject";
+
 };
 
 
@@ -101,13 +103,16 @@ const renderTasksBox = () => {
     taskList.classList.add("taskList");
     document.querySelector(".taskBox").appendChild(taskList);
 
-    projects.forEach( project => {
+   // let activeProjectName = document.querySelector("#activeProject").innerText;
+   // let activeProjectSelect = projects.filter(el => {el.name == activeProjectName});
+/*
+    activeProjectSelect.tasks.forEach( project => {
         let taskElement = document.createElement("li");
         taskElement.classList.add("taskName");
         taskElement.innerText = project.name;
         document.querySelector(".taskList").appendChild(taskElement)
     })
-
+*/
     let taskForm = document.createElement("form");
     taskForm.classList.add("taskForm");
     document.querySelector(".taskBox").appendChild(taskForm);
@@ -129,12 +134,15 @@ const renderTasksBox = () => {
 const selectProject = () => {
     let projectList = document.querySelector(".projectList");
     projectList.addEventListener('click', e => {
+        
         let projectNames = Array.from(document.querySelectorAll(".projectName"));
         projectNames.forEach(name => {
             name.id = "";
         })
-       
-        e.target.id = "activeProject";
+       if (e.target.classList == "projectName") {
+            e.target.id = "activeProject";
+
+        }
     })
 }
 
