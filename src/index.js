@@ -1,17 +1,64 @@
 import {uiCreate} from "./uiCreate"
 
 let projects = [
-    {id:1, name: "First",},
-    {id:2, name:"Second",},
-    {id:3, name: "Third",},
-    {id:4, name: "Fourth",},
-    {id:5, name: "Fifth",},
-    {id:6, name: "Sixth",},
-    {id:7, name: "Seventh",},
-    {id:8, name: "Eighth",},
+    {id:1, name: "First", tasks: ["one", "two", "three"]},
+    {id:2, name:"Second",tasks: ["four", "five", "six"]},
+    {id:3, name: "Third",tasks: ["7", "8", "9"]},
+    {id:4, name: "Fourth",tasks: ["10", "11", "12"]},
+    {id:5, name: "Fifth",tasks: ["13", "14", "15"]},
+    {id:6, name: "Sixth",tasks: ["one16", "tw17o", "18"]},
+    {id:7, name: "Seventh",tasks: ["19", "20", "21"]},
+    {id:8, name: "Eighth",tasks: ["22", "23", "24"]},
 ]
 
+class Project {
+    constructor (id, name) {
+        this.id = id;
+        this.name = name;
+        this.tasks = [];
+    }
+};
+/*
+let isProjectInList = (project) => {
+    return projects.some((project) => {
+        return project.name === name;
+    });
+};*/
+
+const activeProject = () => {
+    
+}
+
+let inputProject = () => {
+    let form =document.querySelector('.projectForm');
+    let input = document.querySelector('.projectFormInput');
+    form.addEventListener('submit', (e) => {
+        
+        if (input.value !== "") {
+
+            e.preventDefault();
+            let name = input.value;
+            let id = (projects.length+1);
+            let newProject = new Project(id, name);
+            projects.push(newProject);
+            renderProjects();
+            input.value = "";
+            
+       }
+    });
+};
+
 const renderProjects = () => {
+    projects.forEach( project => {
+        let projectElement = document.createElement("li");
+        projectElement.classList.add("projectName");
+        projectElement.innerText = project.name;
+        document.querySelector(".projectList").appendChild(projectElement)
+    })
+};
+
+
+const renderProjectsBox = () => {
   
     let projectHeader = document.createElement("h2");
     projectHeader.innerText = "Projects";
@@ -22,12 +69,7 @@ const renderProjects = () => {
     projectList.classList.add("projectList");
     document.querySelector(".projectBox").appendChild(projectList);
 
-    projects.forEach( project => {
-        let projectElement = document.createElement("li");
-        projectElement.classList.add("projectName");
-        projectElement.innerText = project.name;
-        document.querySelector(".projectList").appendChild(projectElement)
-    })
+    renderProjects();
 
     let projectForm = document.createElement("form");
     projectForm.classList.add("projectForm");
@@ -47,7 +89,8 @@ const renderProjects = () => {
 
 }
 
-const renderTasks = () => {
+
+const renderTasksBox = () => {
   
     let taskHeader = document.createElement("h2");
     taskHeader.innerText = "Tasks";
@@ -82,7 +125,21 @@ const renderTasks = () => {
     document.querySelector(".taskForm").appendChild(taskLabel);
 
 }
-uiCreate();
-renderProjects();
-renderTasks();
+
+const selectProject = () => {
+    let projectList = document.querySelector(".projectList");
+    projectList.addEventListener('click', e => {
+        let projectNames = Array.from(document.querySelectorAll(".projectName"));
+        projectNames.forEach(name => {
+            name.id = "";
+        })
        
+        e.target.id = "activeProject";
+    })
+}
+
+uiCreate();
+renderProjectsBox();
+renderTasksBox();
+inputProject();
+selectProject();
