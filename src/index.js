@@ -18,6 +18,13 @@ class Project {
         this.tasks = [];
     }
 };
+
+class Task {
+    constructor(id, name) {
+        this.id = id;
+        this.name = name;
+    }
+};
 /*
 let isProjectInList = (project) => {
     return projects.some((project) => {
@@ -25,8 +32,29 @@ let isProjectInList = (project) => {
     });
 };*/
 
+const inputTask = () => {
+    
+    let form = document.querySelector('.taskForm');
+    let input = document.querySelector('.taskFormInput');
+    form.addEventListener('submit', e => {
+        if (input.value !== '') {
+            e.preventDefault();
+            let activeProjectName = document.querySelector("#activeProject").innerText;
+            let activeProjectSelect = projects.find(el => el.name == activeProjectName);
+            /*let name = input.value;
+            let id = (projects.tasks.length);
+            let newTask = new Task(id, name);*/
 
-let inputProject = () => {
+            // temp task input
+            let newTask = input.value;
+            activeProjectSelect.tasks.push(newTask);
+            input.value = '';
+            renderTasks();
+        }
+    })
+}
+
+const inputProject = () => {
     let form =document.querySelector('.projectForm');
     let input = document.querySelector('.projectFormInput');
     form.addEventListener('submit', (e) => {
@@ -139,7 +167,6 @@ const renderTasksBox = () => {
 const selectProject = () => {
     let projectList = document.querySelector(".projectList");
     projectList.addEventListener('click', e => {
-        
         let projectNames = Array.from(document.querySelectorAll(".projectName"));
         projectNames.forEach(name => {
             name.id = "";
@@ -151,8 +178,23 @@ const selectProject = () => {
     })
 }
 
+const selectTask = () => {
+    let taskList = document.querySelector(".taskList");
+    taskList.addEventListener('click', e => {
+        
+        let taskNames = Array.from(document.querySelectorAll(".taskName"));
+        taskNames.forEach(name => {
+            name.id = "";
+        })
+       if (e.target.classList == "taskName") {
+            e.target.id = "activeTask";
+        }
+    });
+};
 uiCreate();
 renderProjectsBox();
 renderTasksBox();
 inputProject();
+inputTask();
 selectProject();
+selectTask();
