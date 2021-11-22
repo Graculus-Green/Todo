@@ -91,6 +91,19 @@ const renderProjectsBox = () => {
 
 }
 
+const renderTasks = () => {
+// This doesn't work fully yet
+    let activeProjectName = document.querySelector("#activeProject").innerText;
+    let activeProjectSelect = projects.find(el => el.name == activeProjectName);
+    document.querySelector(".taskList").innerHTML = '';
+
+    activeProjectSelect.tasks.forEach( project => {
+        let taskElement = document.createElement("li");
+        taskElement.classList.add("taskName");
+        taskElement.innerText = project;
+        document.querySelector(".taskList").appendChild(taskElement)
+})
+}
 
 const renderTasksBox = () => {
   
@@ -103,16 +116,8 @@ const renderTasksBox = () => {
     taskList.classList.add("taskList");
     document.querySelector(".taskBox").appendChild(taskList);
 
-   // let activeProjectName = document.querySelector("#activeProject").innerText;
-   // let activeProjectSelect = projects.filter(el => {el.name == activeProjectName});
-/*
-    activeProjectSelect.tasks.forEach( project => {
-        let taskElement = document.createElement("li");
-        taskElement.classList.add("taskName");
-        taskElement.innerText = project.name;
-        document.querySelector(".taskList").appendChild(taskElement)
-    })
-*/
+    renderTasks();
+
     let taskForm = document.createElement("form");
     taskForm.classList.add("taskForm");
     document.querySelector(".taskBox").appendChild(taskForm);
@@ -141,7 +146,7 @@ const selectProject = () => {
         })
        if (e.target.classList == "projectName") {
             e.target.id = "activeProject";
-
+            renderTasks();
         }
     })
 }
