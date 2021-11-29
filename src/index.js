@@ -1,14 +1,10 @@
 import {uiCreate} from "./uiCreate"
 
 let projects = [
-    {id:1, name: "First", tasks: ["one", "two", "three"]},
-    {id:2, name:"Second",tasks: ["four", "five", "six"]},
-    {id:3, name: "Third",tasks: ["7", "8", "9"]},
-    {id:4, name: "Fourth",tasks: ["10", "11", "12"]},
-    {id:5, name: "Fifth",tasks: ["13", "14", "15"]},
-    {id:6, name: "Sixth",tasks: ["one16", "tw17o", "18"]},
-    {id:7, name: "Seventh",tasks: ["19", "20", "21"]},
-    {id:8, name: "Eighth",tasks: ["22", "23", "24"]},
+    {id:1, name: "First", tasks: [{name:"one"}, {name:"two"}, {name:"three"}]},
+    {id:2, name:"Second",tasks: [{name:"4"}, {name:"5"}, {name:"6"}]},
+    {id:3, name: "Third",tasks: [{name:"7"}, {name:"8"}, {name:"9"}]},
+
 ]
 
 class Project {
@@ -31,27 +27,30 @@ let isProjectInList = (project) => {
         return project.name === name;
     });
 };*/
-
+const activeProject = () => {
+    let activeProjectName = document.querySelector("#activeProject").innerText;
+    return projects.find(el => el.name == activeProjectName);
+}
 const inputTask = () => {
-    
+
     let form = document.querySelector('.taskForm');
     let input = document.querySelector('.taskFormInput');
     form.addEventListener('submit', e => {
         if (input.value !== '') {
             e.preventDefault();
-            let activeProjectName = document.querySelector("#activeProject").innerText;
-            let activeProjectSelect = projects.find(el => el.name == activeProjectName);
-            /*let name = input.value;
-            let id = (projects.tasks.length);
-            let newTask = new Task(id, name);*/
+            let name = input.value;
+            let id = (activeProject().tasks.length) + 1;
+            let newTask = new Task(id, name);
 
-            // temp task input
-            let newTask = input.value;
-            activeProjectSelect.tasks.push(newTask);
+            activeProject().tasks.push(newTask);
             input.value = '';
             renderTasks();
         }
     })
+}
+
+const deleteTask = () => {
+
 }
 
 const inputProject = () => {
@@ -121,15 +120,21 @@ const renderProjectsBox = () => {
 
 const renderTasks = () => {
 // This doesn't work fully yet
-    let activeProjectName = document.querySelector("#activeProject").innerText;
-    let activeProjectSelect = projects.find(el => el.name == activeProjectName);
+    
     document.querySelector(".taskList").innerHTML = '';
 
-    activeProjectSelect.tasks.forEach( project => {
+    activeProject().tasks.forEach( project => {
         let taskElement = document.createElement("li");
         taskElement.classList.add("taskName");
-        taskElement.innerText = project;
-        document.querySelector(".taskList").appendChild(taskElement)
+        taskElement.id = `task${project.name}`;
+        taskElement.innerText = project.name;
+        document.querySelector(".taskList").appendChild(taskElement);
+
+        // Add delete button
+        let deleteButton = document.createElement("div");
+        deleteButton.classList.add("deleteButton");
+        deleteButton.innerHTML = '&#215';
+        document.querySelector(`#task${project.name}`).appendChild(deleteButton);
 })
 }
 
