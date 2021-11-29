@@ -21,14 +21,10 @@ class Task {
         this.name = name;
     }
 };
-/*
-let isProjectInList = (project) => {
-    return projects.some((project) => {
-        return project.name === name;
-    });
-};*/
+
 const activeProject = () => {
-    let activeProjectName = document.querySelector("#activeProject").innerText;
+    // first line, ignoring x from delete button
+    let activeProjectName = document.querySelector("#activeProject").innerText.split('\n',1)[0];
     return projects.find(el => el.name == activeProjectName);
 }
 const inputTask = () => {
@@ -77,11 +73,28 @@ const renderProjects = () => {
     projects.forEach( project => {
         let projectElement = document.createElement("li");
         projectElement.classList.add("projectName");
+        if (projectElement.id !== 'activeProject') {
+            projectElement.id = `project${project.name}`;
+        };
         projectElement.innerText = project.name;
-        document.querySelector(".projectList").appendChild(projectElement)
+        document.querySelector(".projectList").appendChild(projectElement);
+
+        // Add delete button
+        let deleteButton = document.createElement("div");
+        deleteButton.classList.add("deleteButton");
+        deleteButton.innerHTML = '&#215';
+        if (projectElement.id === 'activeProject') {
+            document.querySelector(`#activeProject`).appendChild(deleteButton);
+        }
+
+        else {
+        document.querySelector(`#project${project.name}`).appendChild(deleteButton);
+        };
+
+        
     })
+
     // Select the first project by default
-  
     document.querySelector(".projectName").id = "activeProject";
 
 };
@@ -123,18 +136,18 @@ const renderTasks = () => {
     
     document.querySelector(".taskList").innerHTML = '';
 
-    activeProject().tasks.forEach( project => {
+    activeProject().tasks.forEach( task => {
         let taskElement = document.createElement("li");
         taskElement.classList.add("taskName");
-        taskElement.id = `task${project.name}`;
-        taskElement.innerText = project.name;
+        taskElement.id = `task${task.name}`;
+        taskElement.innerText = task.name;
         document.querySelector(".taskList").appendChild(taskElement);
 
         // Add delete button
         let deleteButton = document.createElement("div");
         deleteButton.classList.add("deleteButton");
         deleteButton.innerHTML = '&#215';
-        document.querySelector(`#task${project.name}`).appendChild(deleteButton);
+        document.querySelector(`#task${task.name}`).appendChild(deleteButton);
 })
 }
 

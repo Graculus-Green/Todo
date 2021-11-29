@@ -106,11 +106,10 @@ body {
 
 li {
     display: flex;
-    align-content: center;
-    align-self: center;
+    align-items: center;
     cursor: pointer;
     width: 100%;
-    padding-top: 6px;
+    padding-top: 2px;
     padding-bottom: 2px;
     justify-content: space-between;
 }
@@ -126,17 +125,15 @@ ul {
     font-weight: 900;
 }
 
-/* Style the close button (span) */
 .deleteButton {
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
     cursor: pointer;
     border-radius: 5px;
     padding: 2px 5px;
-    margin: 6px;
     margin-right: 0;
-    transform: translate(0%, -50%);
     color: lightcoral;
     font-weight: 900;
 
