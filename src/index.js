@@ -19,6 +19,10 @@ class Task {
     constructor(id, name) {
         this.id = id;
         this.name = name;
+
+        //Add functionality to these
+        this.taskDescription = '';
+        this.taskDue = '';
     }
 };
 
@@ -45,8 +49,16 @@ const inputTask = () => {
     })
 }
 
-const deleteTask = () => {
-
+const deleteProject = () => {
+    let deleteButtons = document.querySelectorAll('.deleteButton');
+    deleteButtons.forEach(deleteButton => {
+        deleteButton.addEventListener ('click', e => {
+            console.log("Hi");
+      
+        
+        })
+    })
+    renderProjects();
 }
 
 const inputProject = () => {
@@ -80,8 +92,9 @@ const renderProjects = () => {
         document.querySelector(".projectList").appendChild(projectElement);
 
         // Add delete button
-        let deleteButton = document.createElement("div");
+        let deleteButton = document.createElement("button");
         deleteButton.classList.add("deleteButton");
+        deleteButton.id = `deleteProject${project.name}`;
         deleteButton.innerHTML = '&#215';
         if (projectElement.id === 'activeProject') {
             document.querySelector(`#activeProject`).appendChild(deleteButton);
@@ -96,6 +109,7 @@ const renderProjects = () => {
 
     // Select the first project by default
     document.querySelector(".projectName").id = "activeProject";
+    
 
 };
 
@@ -129,6 +143,7 @@ const renderProjectsBox = () => {
     projectLabel.innerText = "Add a project";
     document.querySelector(".projectForm").appendChild(projectLabel);
 
+
 }
 
 const renderTasks = () => {
@@ -144,7 +159,7 @@ const renderTasks = () => {
         document.querySelector(".taskList").appendChild(taskElement);
 
         // Add delete button
-        let deleteButton = document.createElement("div");
+        let deleteButton = document.createElement("button");
         deleteButton.classList.add("deleteButton");
         deleteButton.innerHTML = '&#215';
         document.querySelector(`#task${task.name}`).appendChild(deleteButton);
@@ -184,14 +199,16 @@ const renderTasksBox = () => {
 
 const selectProject = () => {
     let projectList = document.querySelector(".projectList");
+
     projectList.addEventListener('click', e => {
-        let projectNames = Array.from(document.querySelectorAll(".projectName"));
-        projectNames.forEach(name => {
-            name.id = "";
-        })
-       if (e.target.classList == "projectName") {
+        if (e.target.classList == 'projectName') {
+            let projectNames = Array.from(document.querySelectorAll(".projectName"));
+            projectNames.forEach(name => {
+                name.id = "";
+            })
             e.target.id = "activeProject";
             renderTasks();
+    
         }
     })
 }
@@ -199,12 +216,11 @@ const selectProject = () => {
 const selectTask = () => {
     let taskList = document.querySelector(".taskList");
     taskList.addEventListener('click', e => {
-        
-        let taskNames = Array.from(document.querySelectorAll(".taskName"));
-        taskNames.forEach(name => {
-            name.id = "";
-        })
-       if (e.target.classList == "taskName") {
+        if (e.target.classList == 'taskName') {
+            let taskNames = Array.from(document.querySelectorAll(".taskName"));
+            taskNames.forEach(name => {
+                name.id = "";
+            })
             e.target.id = "activeTask";
         }
     });
@@ -216,3 +232,4 @@ inputProject();
 inputTask();
 selectProject();
 selectTask();
+deleteProject();
