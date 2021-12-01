@@ -25,6 +25,14 @@ class Task {
         this.taskDue = '';
     }
 };
+/*
+const createDOMElement = (type, className, idName, parent) => {
+    let element = document.createElement(`${type}`);
+    element.classList.add(`${className}`);
+    element.id = idName;
+    document.querySelector(`${parent}`).appendChild(element);
+
+};*/
 
 const activeProject = () => {
     // first line, ignoring x from delete button
@@ -47,21 +55,19 @@ const inputTask = () => {
             renderTasks();
         };
     })
-}
+};
 
 const deleteTask = () => {
     let deleteButtons = document.querySelector('.taskBox').querySelectorAll('.deleteButton');
     deleteButtons.forEach(deleteButton => {
         deleteButton.addEventListener ('click', e => {
             let taskName = e.target.id.slice(10);
-            
             activeProject().tasks = activeProject().tasks.filter(task => task.name !== taskName); 
-            console.log(activeProject()); 
             renderTasks();
         });
     });
     
-}
+};
 
 const deleteProject = () => {
     let deleteButtons = document.querySelector('.projectList').querySelectorAll('.deleteButton');
@@ -69,14 +75,16 @@ const deleteProject = () => {
         deleteButton.addEventListener ('click', e => {
             e.preventDefault();
             let projectName = e.target.id.slice(13);
-            console.log(projectName);
-
             projects = projects.filter(project => project.name !== projectName);
             renderProjects();
+            if (projects.length == 0) {
+                renderTasks();
+            }
+            
         });
     });
     
-}
+};
 
 const inputProject = () => {
     let form =document.querySelector('.projectForm');
@@ -125,6 +133,15 @@ const renderProjects = () => {
         })
         document.querySelector(".projectName").id = "activeProject";
     }
+    
+    else {
+        let noProject = document.createElement("div");
+        noProject.classList.add("noProject");
+        noProject.id = `noProject`;
+        document.querySelector('.projectList').appendChild(noProject);
+        noProject.innerHTML = 'Enter your next project';
+    };
+    
     // Select the first project by default
     
     deleteProject();
@@ -163,31 +180,41 @@ const renderProjectsBox = () => {
     document.querySelector(".projectForm").appendChild(projectLabel);
 
 
-}
+};
 
 const renderTasks = () => {
 // This doesn't work fully yet
     
     document.querySelector(".taskList").innerHTML = '';
 
-    activeProject().tasks.forEach( task => {
-        let taskElement = document.createElement("li");
-        taskElement.classList.add("taskName");
-        taskElement.id = `task${task.name}`;
-        taskElement.innerText = task.name;
-        document.querySelector(".taskList").appendChild(taskElement);
+    if (projects.length > 0) {
+        activeProject().tasks.forEach( task => {
+            let taskElement = document.createElement("li");
+            taskElement.classList.add("taskName");
+            taskElement.id = `task${task.name}`;
+            taskElement.innerText = task.name;
+            document.querySelector(".taskList").appendChild(taskElement);
 
-        // Add delete button
-        let deleteButton = document.createElement("button");
-        deleteButton.classList.add("deleteButton");
-        deleteButton.id = `deleteTask${task.name}`;
-        deleteButton.innerHTML = '&#215';
-        document.querySelector(`#task${task.name}`).appendChild(deleteButton);
-})
+            // Add delete button
+            let deleteButton = document.createElement("button");
+            deleteButton.classList.add("deleteButton");
+            deleteButton.id = `deleteTask${task.name}`;
+            deleteButton.innerHTML = '&#215';
+            document.querySelector(`#task${task.name}`).appendChild(deleteButton);
+        })
+    }
 
+    else {
+        //let noTask = createDOMElement('div', 'noTaskHere', 'noTaskHere', '.taskList');
+        let noTask = document.createElement("div");
+        noTask.classList.add("noTask");
+        noTask.id = `noTask`;
+        document.querySelector('.taskList').appendChild(noTask);
+        noTask.innerHTML = 'No tasks here.';
+    };
     deleteTask();
     selectTask();
-}
+};
 
 const renderTasksBox = () => {
   
@@ -218,7 +245,7 @@ const renderTasksBox = () => {
     taskLabel.innerText = "Add a task";
     document.querySelector(".taskForm").appendChild(taskLabel);
 
-}
+};
 
 const selectProject = () => {
     let projectList = document.querySelector(".projectList");
@@ -234,7 +261,7 @@ const selectProject = () => {
     
         }
     })
-}
+};
 
 const selectTask = () => {
     let taskList = document.querySelector(".taskList");
