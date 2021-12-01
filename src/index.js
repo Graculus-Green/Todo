@@ -45,20 +45,33 @@ const inputTask = () => {
             activeProject().tasks.push(newTask);
             input.value = '';
             renderTasks();
-        }
+        };
     })
 }
 
-const deleteProject = () => {
-    let deleteButtons = document.querySelectorAll('.deleteButton');
+const deleteTask = () => {
+    let deleteButtons = document.querySelector('.taskBox').querySelectorAll('.deleteButton');
     deleteButtons.forEach(deleteButton => {
         deleteButton.addEventListener ('click', e => {
-            console.log("Hi");
-      
-        
-        })
-    })
-    renderProjects();
+            console.log(e.target.id.slice(10));
+        });
+    });
+    //renderTasks();
+}
+
+const deleteProject = () => {
+    let deleteButtons = document.querySelector('.projectList').querySelectorAll('.deleteButton');
+    deleteButtons.forEach(deleteButton => {
+        deleteButton.addEventListener ('click', e => {
+            e.preventDefault();
+            let projectName = e.target.id.slice(13);
+            console.log(projectName);
+
+            projects = projects.filter(project => project.name !== projectName);
+            renderProjects();
+        });
+    });
+    
 }
 
 const inputProject = () => {
@@ -82,33 +95,35 @@ const inputProject = () => {
 
 const renderProjects = () => {
     document.querySelector(".projectList").innerHTML = '';
-    projects.forEach( project => {
-        let projectElement = document.createElement("li");
-        projectElement.classList.add("projectName");
-        if (projectElement.id !== 'activeProject') {
-            projectElement.id = `project${project.name}`;
-        };
-        projectElement.innerText = project.name;
-        document.querySelector(".projectList").appendChild(projectElement);
 
-        // Add delete button
-        let deleteButton = document.createElement("button");
-        deleteButton.classList.add("deleteButton");
-        deleteButton.id = `deleteProject${project.name}`;
-        deleteButton.innerHTML = '&#215';
-        if (projectElement.id === 'activeProject') {
-            document.querySelector(`#activeProject`).appendChild(deleteButton);
-        }
+    if (projects.length >> 0) {
+        projects.forEach( project => {
+            let projectElement = document.createElement("li");
+            projectElement.classList.add("projectName");
+            if (projectElement.id !== 'activeProject') {
+                projectElement.id = `project${project.name}`;
+            };
+            projectElement.innerText = project.name;
+            document.querySelector(".projectList").appendChild(projectElement);
 
-        else {
-        document.querySelector(`#project${project.name}`).appendChild(deleteButton);
-        };
+            // Add delete button
+            let deleteButton = document.createElement("button");
+            deleteButton.classList.add("deleteButton");
+            deleteButton.id = `deleteProject${project.name}`;
+            deleteButton.innerHTML = '&#215';
+            if (projectElement.id === 'activeProject') {
+                document.querySelector(`#activeProject`).appendChild(deleteButton);
+            }
 
-        
-    })
-
+            else {
+            document.querySelector(`#project${project.name}`).appendChild(deleteButton);
+            };
+        })
+        document.querySelector(".projectName").id = "activeProject";
+    }
     // Select the first project by default
-    document.querySelector(".projectName").id = "activeProject";
+    
+    deleteProject();
     
 
 };
@@ -161,9 +176,12 @@ const renderTasks = () => {
         // Add delete button
         let deleteButton = document.createElement("button");
         deleteButton.classList.add("deleteButton");
+        deleteButton.id = `deleteTask${task.name}`;
         deleteButton.innerHTML = '&#215';
         document.querySelector(`#task${task.name}`).appendChild(deleteButton);
 })
+
+    deleteTask();
 }
 
 const renderTasksBox = () => {
@@ -232,4 +250,3 @@ inputProject();
 inputTask();
 selectProject();
 selectTask();
-deleteProject();
