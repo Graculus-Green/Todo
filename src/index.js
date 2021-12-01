@@ -53,10 +53,14 @@ const deleteTask = () => {
     let deleteButtons = document.querySelector('.taskBox').querySelectorAll('.deleteButton');
     deleteButtons.forEach(deleteButton => {
         deleteButton.addEventListener ('click', e => {
-            console.log(e.target.id.slice(10));
+            let taskName = e.target.id.slice(10);
+            
+            activeProject().tasks = activeProject().tasks.filter(task => task.name !== taskName); 
+            console.log(activeProject()); 
+            renderTasks();
         });
     });
-    //renderTasks();
+    
 }
 
 const deleteProject = () => {
@@ -124,7 +128,7 @@ const renderProjects = () => {
     // Select the first project by default
     
     deleteProject();
-    
+    selectProject();
 
 };
 
@@ -182,6 +186,7 @@ const renderTasks = () => {
 })
 
     deleteTask();
+    selectTask();
 }
 
 const renderTasksBox = () => {
@@ -248,5 +253,6 @@ renderProjectsBox();
 renderTasksBox();
 inputProject();
 inputTask();
-selectProject();
-selectTask();
+
+
+
