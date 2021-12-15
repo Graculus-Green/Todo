@@ -25,20 +25,17 @@ class Task {
         this.taskDue = '';
     }
 };
-/*
-const createDOMElement = (type, className, idName, parent) => {
-    let element = document.createElement(`${type}`);
-    element.classList.add(`${className}`);
-    element.id = idName;
-    document.querySelector(`${parent}`).appendChild(element);
 
-};*/
+const justAlphaNum = (string) => {
+    return string.replace(/[^A-Za-z0-9]/g, '');
+};
 
 const activeProject = () => {
     // first line, ignoring x from delete button
-    let activeProjectName = document.querySelector("#activeProject").innerText.split('\n',1)[0];
+    let activeProjectName = document.querySelector("#activeProject").innerText.split('\n')[0];
     return projects.find(el => el.name == activeProjectName);
-}
+};
+
 const inputTask = () => {
 
     let form = document.querySelector('.taskForm');
@@ -46,7 +43,7 @@ const inputTask = () => {
     form.addEventListener('submit', e => {
         if (input.value !== '') {
             e.preventDefault();
-            let name = input.value;
+            let name = `${justAlphaNum(input.value)}`;
             let id = (activeProject().tasks.length) + 1;
             let newTask = new Task(id, name);
 
@@ -94,12 +91,16 @@ const inputProject = () => {
         if (input.value !== "") {
 
             e.preventDefault();
-            let name = input.value;
+            let name = `${justAlphaNum(input.value)}`;
             let id = (projects.length+1);
             let newProject = new Project(id, name);
             projects.push(newProject);
+
+            // Added for test
+            window.localStorage.setItem(`${name}`, JSON.stringify(newProject));
+
             renderProjects();
-            input.value = "";
+            input.value = ``;
             
        }
     });
@@ -187,7 +188,7 @@ const renderTasks = () => {
     
     document.querySelector(".taskList").innerHTML = '';
 
-    if (projects.length > 0) {
+    if (projects.length > 0) { 
         activeProject().tasks.forEach( task => {
             let taskElement = document.createElement("li");
             taskElement.classList.add("taskName");
